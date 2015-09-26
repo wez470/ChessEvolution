@@ -24,8 +24,8 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void setRotation() {
-		float rotX = Input.GetAxis( "R_XAxis_1" );
-		float rotY = Input.GetAxis( "R_YAxis_1" );
+		float rotX = Input.GetAxis("R_XAxis_1");
+		float rotY = Input.GetAxis("R_YAxis_1");
 		float angle = Mathf.Atan2(-rotY, rotX) * Mathf.Rad2Deg - 90f;
 
 		if(Mathf.Abs(rotX) > ROT_DEAD_ZONE || Mathf.Abs(rotY) > ROT_DEAD_ZONE) {
