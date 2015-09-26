@@ -13,6 +13,6 @@ public class Weapon {
 	}
 
 	public float GetStrength() {
-		return 0.0;
+		return 0.0f;
 	}
 }
