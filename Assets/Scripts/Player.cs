@@ -5,10 +5,10 @@ public class Player : MonoBehaviour {
     private const float ROT_DEAD_ZONE = 0.2f;
 
 	public float Speed;
+	public bool ShowInputDebug = false;
 
 	private InputController input;
 	private Weapon weapon;
-
 	private Shield playerShield;
 
 	void Start () {
@@ -40,6 +40,27 @@ public class Player : MonoBehaviour {
 	void FixedUpdate() {
 		setMovement();
 		setRotation();
+	}
+
+	void OnGUI() {
+		if (ShowInputDebug) {
+			GUI.contentColor = Color.black;
+			GUI.Label(new Rect(0, 0, Screen.width, Screen.height),
+		          string.Format(string.Join("\n",
+		                          new string[] {
+			                          "X-axis movement = {0}",
+			                          "Y-axis movement = {1}",
+			                          "X-axis rotation = {2}",
+			                          "Y-axis rotation = {3}",
+			                          "Fire weapon = {4}",
+			                          "Use shield = {5}"}),
+		              Input.GetAxis(input.GetXAxisMovement()),
+		              Input.GetAxis(input.GetYAxisMovement()),
+		              Input.GetAxis(input.GetXAxisRotation()),
+		              Input.GetAxis(input.GetYAxisRotation()),
+					  Input.GetAxis(input.GetFireWeapon()),
+				      Input.GetAxis(input.GetUseShield())));
+		}
 	}
 
 	private void setMovement() {

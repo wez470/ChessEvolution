@@ -7,11 +7,13 @@ public class Weapon {
 		bulletSpawners = new List<BulletSpawner>{new BulletSpawner()};
 	}
 
-	public void Fire(Player player){
-
+	public void Fire(Player player) {
+		foreach (BulletSpawner bulletSpawner in bulletSpawners) {
+			bulletSpawner.Fire(player);
+		}
 	}
 	
-	public void Morph(Weapon w){
+	public void Morph(Weapon w) {
 	
 	}
 
