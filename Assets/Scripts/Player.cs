@@ -17,19 +17,31 @@ public class Player : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(Input.GetButtonDown(input.GetFireWeapon())) {
+		checkFire();
+		checkShield();
+	}
+
+	private void checkFire() {
+		if(Input.GetAxis(input.GetFireWeapon()) > 0.1f) {
 			weapon.Fire(this);
 		}
+	}
+
+	private void checkShield() {
+		float leftTrigger = Input.GetAxis(input.GetUseShield());
+		bool isLeftTriggerDown = leftTrigger > 0.9f;
+
+		// TODO: Disable Shield
+		playerShield.gameObject.SetActive(isLeftTriggerDown);
+	}
+
+	public void SetInput(InputController inputController) {
+		input = inputController;
 	}
 
 	void FixedUpdate() {
 		setMovement();
 		setRotation();
-		checkShield();
-	}
-	
-	public void SetInput(InputController inputController) {
-		input = inputController;
 	}
 
 	private void setMovement() {
@@ -47,14 +59,5 @@ public class Player : MonoBehaviour {
 			transform.rotation = Quaternion.Euler(0, 0, angle);
 			GetComponent<Rigidbody2D>().angularVelocity = 0;
 		}
-	}
-
-	private void checkShield() {
-		float leftTrigger = Input.GetAxis(input.GetUseShield());
-		bool isLeftTriggerDown = leftTrigger > 0.9f;
-		Debug.Log (isLeftTriggerDown);
-
-		// TODO: Disable Shield 
-		playerShield.gameObject.SetActive(isLeftTriggerDown);
 	}
 }
