@@ -10,6 +10,10 @@ public class Weapon : MonoBehaviour {
 	public void Morph(Weapon w){
 	
 	}
+
+	public float GetStrength() {
+		return 0.0;
+	}
 	
 	// Use this for initialization
 	void Start () {
