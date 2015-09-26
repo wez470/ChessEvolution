@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour {
 		GameObject newPlayer = Instantiate(Player) as GameObject;
 		newPlayer.transform.position = new Vector3(0, 0, 0);
 		SetupNewPlayerController(playerNum, newPlayer);
+		newPlayer.tag = "Player" + playerNum;
 		players.Add(newPlayer);
 	}
 	
