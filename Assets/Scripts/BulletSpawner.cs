@@ -7,21 +7,25 @@ public class BulletSpawner {
     // In degrees, clockwise from player direction.
     private float angle;
 
-    // TODO(scott): What are the units here?
-    private float speed;
-    
-    // TODO(scott): What are the units here?
+    private float fireDelay;
+    private float speed;    
     private float bulletSize;
 
     public BulletSpawner(Player owner) {
         this.owner = owner;
         angle = 0;
-        speed = 40;      // TODO(scott): Find a proper default...
-        bulletSize = 10; // TODO(scott): Find a proper default...
+        fireDelay = 1;
+        speed = 8;
+        bulletSize = 1;
     }
     
-    public void Fire(){
+    public void Fire() {
         GameObject bullet = MonoBehaviour.Instantiate(owner.Bullet);
         bullet.transform.position = owner.transform.position;
+        bullet.transform.localScale *= bulletSize;
+
+        float angle = (owner.transform.eulerAngles.z + 90.0f) * Mathf.Deg2Rad;
+        Vector2 velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * speed;
+        bullet.GetComponent<Rigidbody2D>().velocity = velocity;
     }
 }
