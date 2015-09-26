@@ -14,19 +14,19 @@ public class PlayerXboxController : InputController {
 		return "TriggersR_" + playerNum;
 	}
 	
-	string InputController.getXAxisMovement() {
+	string InputController.GetXAxisMovement() {
 		return "L_XAxis_" + playerNum;
 	}
 	
-	string InputController.getYAxisMovement() {
+	string InputController.GetYAxisMovement() {
 		return "L_YAxis_" + playerNum;
 	}
 	
-	string InputController.getXAxisRotation() {
+	string InputController.GetXAxisRotation() {
 		return "R_XAxis_" + playerNum;
 	}
 	
-	string InputController.getYAxisRotation() {
+	string InputController.GetYAxisRotation() {
 		return "R_YAxis_" + playerNum;
 	}
 }

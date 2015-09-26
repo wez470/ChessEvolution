@@ -1,5 +1,4 @@
 public interface InputController {
-	
 	string GetFireWeapon();
 	
 	string GetUseShield();
