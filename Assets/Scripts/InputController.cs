@@ -1,21 +1,14 @@
 public interface InputController {
-	string getGrappleButton();
 	
-	string getSwitchLeftHand();
+	string GetFireWeapon();
 	
-	string getSwitchRightHand();
+	string GetUseShield();
 	
-	string getAttackButton();
+	string GetXAxisMovement();
 	
-	string getAnchorButton();
+	string GetYAxisMovement();
 	
-	string getTargetingButton();
+	string GetXAxisRotation();
 	
-	string getXAxisMovement();
-	
-	string getYAxisMovement();
-	
-	string getXAxisRotation();
-	
-	string getYAxisRotation();
+	string GetYAxisRotation();
 }

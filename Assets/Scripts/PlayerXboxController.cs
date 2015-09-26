@@ -6,28 +6,12 @@ public class PlayerXboxController : InputController {
 		this.playerNum = playerNum;	// Never used here
 	}
 	
-	string InputController.getGrappleButton() {
+	string InputController.GetUseShield() {
 		return "TriggersL_" + playerNum;
 	}
 	
-	string InputController.getSwitchLeftHand() {
-		return "LB_" + playerNum;
-	}
-	
-	string InputController.getSwitchRightHand() {
-		return "RB_" + playerNum;
-	}
-	
-	string InputController.getAttackButton() {
+	string InputController.GetFireWeapon() {
 		return "TriggersR_" + playerNum;
-	}
-	
-	string InputController.getAnchorButton() {
-		return "A_" + playerNum;
-	}
-	
-	string InputController.getTargetingButton() {
-		return "LS_" + playerNum;
 	}
 	
 	string InputController.getXAxisMovement() {
