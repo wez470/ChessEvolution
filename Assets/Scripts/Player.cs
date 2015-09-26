@@ -7,11 +7,16 @@ public class Player : MonoBehaviour {
 	public float Speed;
 
 	private InputController input;
+	private Weapon weapon;
 
 	void Start () {
+		weapon = new Weapon();
 	}
 	
 	void Update () {
+		if(Input.GetButtonDown(input.GetFireWeapon())) {
+			weapon.Fire(this);
+		}
 	}
 
 	void FixedUpdate() {
