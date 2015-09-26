@@ -1,10 +1,7 @@
 .DS_Store
 *.csproj
 *.userprefs
- /Library/FailedAssetImports.txt
- /Library/cache/
- /Library/previews/
- /Library/ScriptAssemblies
+ Library
 *.pdb
 *.apk
 Temp
