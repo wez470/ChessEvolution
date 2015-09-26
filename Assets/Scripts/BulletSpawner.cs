@@ -21,6 +21,10 @@ public class BulletSpawner {
     
     public void Fire() {
         GameObject bullet = MonoBehaviour.Instantiate(owner.Bullet);
+
+        // Ignore collisions between the bullet and the player who fired it.
+        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>(), true);
+
         bullet.transform.position = owner.transform.position;
         bullet.transform.localScale *= bulletSize;
 
