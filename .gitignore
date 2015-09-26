@@ -1,6 +1,5 @@
 .DS_Store
 *.csproj
-Library
 *.userprefs
 *.pdb
 *.apk
