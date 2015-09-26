@@ -36,7 +36,7 @@ public class PlayerManager : MonoBehaviour {
 	
 	private void SetupNewPlayerController(int playerNum, GameObject player) 
 	{
-		//player.GetComponent<Player>().SetInput(new PlayerXboxController(playerNum));
+		player.GetComponent<Player>().SetInput(new PlayerXboxController(playerNum));
 	}
 	
 	public int GetNumPlayers() {

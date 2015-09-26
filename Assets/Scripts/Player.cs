@@ -6,6 +6,8 @@ public class Player : MonoBehaviour {
 
 	public float Speed;
 
+	private InputController input;
+
 	void Start () {
 	}
 	
@@ -17,15 +19,19 @@ public class Player : MonoBehaviour {
 		setRotation();
 	}
 	
+	public void SetInput(InputController inputController) {
+		input = inputController;
+	}
+
 	private void setMovement() {
-		float speedX = Input.GetAxis("L_XAxis_1") * Speed;
-		float speedY = -Input.GetAxis("L_YAxis_1") * Speed;
+		float speedX = Input.GetAxis(input.GetXAxisMovement()) * Speed;
+		float speedY = -Input.GetAxis(input.GetYAxisMovement()) * Speed;
 		GetComponent<Rigidbody2D>().AddForce(new Vector2(speedX, speedY));
 	}
 	
 	private void setRotation() {
-		float rotX = Input.GetAxis("R_XAxis_1");
-		float rotY = Input.GetAxis("R_YAxis_1");
+		float rotX = Input.GetAxis(input.GetXAxisRotation());
+		float rotY = Input.GetAxis(input.GetYAxisRotation());
 		float angle = Mathf.Atan2(-rotY, rotX) * Mathf.Rad2Deg - 90f;
 
 		if(Mathf.Abs(rotX) > ROT_DEAD_ZONE || Mathf.Abs(rotY) > ROT_DEAD_ZONE) {
