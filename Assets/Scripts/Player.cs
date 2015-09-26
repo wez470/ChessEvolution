@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 
     public float Speed;
     public bool ShowInputDebug = false;
+    public GameObject Bullet;
 
     private InputController input;
     private Weapon weapon;
@@ -13,7 +14,7 @@ public class Player : MonoBehaviour {
 
     void Start () {
         playerShield = GetComponentInChildren<Shield>();
-        weapon = new Weapon();
+        weapon = new Weapon(this);
     }
     
     void Update () {
@@ -23,7 +24,7 @@ public class Player : MonoBehaviour {
 
     private void checkFire() {
         if(Input.GetAxis(input.GetFireWeapon()) > 0.1f) {
-            weapon.Fire(this);
+            weapon.Fire();
         }
     }
 

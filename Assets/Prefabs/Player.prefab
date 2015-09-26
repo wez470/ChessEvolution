@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 40
+  ShowInputDebug: 0
+  Bullet: {fileID: 130136, guid: c2923832231d48947a1a370f674cf09f, type: 2}
 --- !u!114 &11466202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -240,7 +242,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: Bullet
+      value: 
+      objectReference: {fileID: 130136, guid: c2923832231d48947a1a370f674cf09f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 138510}

@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 
 public class Weapon {
-    List<BulletSpawner> bulletSpawners;
+    private Player owner;
+    private List<BulletSpawner> bulletSpawners;
 
-    public Weapon() {
-        bulletSpawners = new List<BulletSpawner>{new BulletSpawner()};
+    public Weapon(Player owner) {
+        bulletSpawners = new List<BulletSpawner>{new BulletSpawner(owner)};
     }
 
-    public void Fire(Player player) {
+    public void Fire() {
         foreach (BulletSpawner bulletSpawner in bulletSpawners) {
-            bulletSpawner.Fire(player);
+            bulletSpawner.Fire();
         }
     }
     
