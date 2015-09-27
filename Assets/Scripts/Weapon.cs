@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 public class Weapon {
+    private const float MORPH_STRENGTH_INCREASE = 1.0f;
+    private const float CHANCE_TO_KEEP_WEAPON = 0.80f; // chance that you own bullet spawner is included in new weapon
+    private const float CHANCE_TO_GAIN_WEAPON = 0.50f; // chance that other's bullet spawner is included in new weapon
+
     private Player owner;
     private List<BulletSpawner> bulletSpawners;
 
@@ -40,18 +44,18 @@ public class Weapon {
     public static Weapon Morph(Weapon mine, Weapon other) {
         Weapon combined = new Weapon(mine.owner);
 
-        float targetStrength = Mathf.Max(mine.GetStrength(), other.GetStrength()) + 1.0f;
+        float targetStrength = Mathf.Max(mine.GetStrength(), other.GetStrength()) + MORPH_STRENGTH_INCREASE;
         float strength = 0;
         
         foreach (BulletSpawner bs in mine.bulletSpawners) {
-            if (UnityEngine.Random.value > 0.80) {
+            if (UnityEngine.Random.value > CHANCE_TO_KEEP_WEAPON) {
                 strength += bs.GetStrength();
                 combined.bulletSpawners.Add(bs);
             }
         }
         
         foreach (BulletSpawner bs in other.bulletSpawners) {
-            if (UnityEngine.Random.value > 0.50) {
+            if (UnityEngine.Random.value > CHANCE_TO_GAIN_WEAPON) {
                 strength += bs.GetStrength();
                 combined.bulletSpawners.Add(bs);
             }
