@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
     private const float ROT_DEAD_ZONE = 0.2f;
 	private const float DEFAULT_RESPAWN_TIME = 3.5f;
+    private const float WEAPON_UPGRADE_TIME = 20.0f;
 
     public float Speed;
     public bool ShowInputDebug = false;
@@ -73,7 +74,7 @@ public class Player : MonoBehaviour {
 			hp = MAX_HP;
 			setPlayerColorForHP();
 		}
-        if ((Time.time - lastMorphTime) > 10.0f) {
+        if ((Time.time - lastMorphTime) > WEAPON_UPGRADE_TIME) {
             lastMorphTime = Time.time;
             weapon = Weapon.Morph(weapon, Weapon.Random(0.5f));
         }
