@@ -6,7 +6,6 @@ public class Weapon {
     public const float DEFAULT_FIRE_DELAY = 0.75f;
     public const float DEFAULT_SPEED = 8;
 
-    public Player Owner;
     public float Speed;     // Speed of the spawned bullets.
     public float FireDelay; // Minimum time (in seconds) between successive firings.
     
@@ -19,22 +18,21 @@ public class Weapon {
     
     private List<BulletSpawner> bulletSpawners;
 
-    public Weapon(Player owner) {
-        Owner = owner;
+    public Weapon() {
         Speed = DEFAULT_SPEED;
         FireDelay = DEFAULT_FIRE_DELAY;
         bulletSpawners = new List<BulletSpawner>();
         lastFiredTime = 0;
     }
     
-    public static Weapon Default(Player owner) {
-        Weapon w = new Weapon(owner);
-        w.bulletSpawners = new List<BulletSpawner>{new BulletSpawner(w)};
+    public static Weapon Default() {
+        Weapon w = new Weapon();
+        w.bulletSpawners = new List<BulletSpawner>{new BulletSpawner()};
         return w;
     }
 
-    public static Weapon Random(Player owner, float targetStrength) {
-        Weapon w = new Weapon(owner);
+    public static Weapon Random(float targetStrength) {
+        Weapon w = new Weapon();
 
         float strength = 0;
         w.bulletSpawners = new List<BulletSpawner>();
@@ -43,15 +41,15 @@ public class Weapon {
         w.FireDelay = RandomDistributions.RandNormal(DEFAULT_FIRE_DELAY, 0.05f);
         
         while (strength < targetStrength) {
-            BulletSpawner bulletSpawner = BulletSpawner.Random(w);
-            strength += bulletSpawner.GetStrength();
+            BulletSpawner bulletSpawner = BulletSpawner.Random();
+            strength += bulletSpawner.GetStrength(w);
             w.bulletSpawners.Add(bulletSpawner);
         }
 
         return w;
     }
 
-    public void Fire() {
+    public void Fire(Player owner) {
         // Don't fire if we fired within fireDelay seconds ago.
         if ((Time.time - lastFiredTime) < FireDelay) {
             return;
@@ -60,34 +58,33 @@ public class Weapon {
         lastFiredTime = Time.time;
 
         foreach (BulletSpawner bulletSpawner in bulletSpawners) {
-            bulletSpawner.Fire();
+            bulletSpawner.Fire(owner, this);
         }
     }
     
     public static Weapon Morph(Weapon mine, Weapon other) {
-        Weapon combined = new Weapon(mine.Owner);
+        Weapon combined = new Weapon();
 
         float targetStrength = Mathf.Max(mine.GetStrength(), other.GetStrength()) + MORPH_STRENGTH_INCREASE;
         float strength = 0;
         
         foreach (BulletSpawner bs in mine.bulletSpawners) {
             if (UnityEngine.Random.value < CHANCE_TO_KEEP_WEAPON) {
-                strength += bs.GetStrength();
+                strength += bs.GetStrength(combined);
                 combined.bulletSpawners.Add(bs);
             }
         }
         
         foreach (BulletSpawner bs in other.bulletSpawners) {
             if (UnityEngine.Random.value < CHANCE_TO_GAIN_WEAPON) {
-                bs.SetOwningWeapon(combined);
-                strength += bs.GetStrength();
+                strength += bs.GetStrength(combined);
                 combined.bulletSpawners.Add(bs);
             }
         }
 
         while (strength < targetStrength) {
-            BulletSpawner bulletSpawner = BulletSpawner.Random(mine);
-            strength += bulletSpawner.GetStrength();
+            BulletSpawner bulletSpawner = BulletSpawner.Random();
+            strength += bulletSpawner.GetStrength(combined);
             combined.bulletSpawners.Add(bulletSpawner);
         }
 
@@ -95,6 +92,6 @@ public class Weapon {
     }
 
     public float GetStrength() {
-        return bulletSpawners.Select(bs => bs.GetStrength()).Sum();
+        return bulletSpawners.Select(bs => bs.GetStrength(this)).Sum();
     }
 }

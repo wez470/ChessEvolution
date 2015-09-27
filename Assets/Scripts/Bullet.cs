@@ -4,6 +4,7 @@ using System.Collections;
 public class Bullet : MonoBehaviour {
     private const float SPLIT_CONE_ANGLE = 45; // (degrees)
 
+    public Player Owner;
     public float CurveSpeed;
     public float LastSplitTime; // Time when the last bullet split happened.
     public float SplitDelay;    // Amount of time between bullet splits.
@@ -33,11 +34,12 @@ public class Bullet : MonoBehaviour {
             float stepAngle = SPLIT_CONE_ANGLE / (NumSplitBullets - 1);
 
             for (int i = 0; i < NumSplitBullets; i++) {
-                Bullet b = Instantiate(this);
+                GameObject bulletObject = Instantiate(gameObject);
+                Bullet b = bulletObject.GetComponent<Bullet>();
                 b.SplitsLeft = SplitsLeft - 1;
                 b.LastSplitTime = Time.time;
 
-                Rigidbody2D otherRb = b.GetComponent<Rigidbody2D>();
+                Rigidbody2D otherRb = bulletObject.GetComponent<Rigidbody2D>();
                 float bulletAngle = Mathf.Atan2(v.y, v.x);
                 float newAngle = bulletAngle + angle * Mathf.Deg2Rad;
                 otherRb.velocity = new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle)) * rb.velocity.magnitude;

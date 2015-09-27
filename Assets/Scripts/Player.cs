@@ -42,7 +42,7 @@ public class Player : MonoBehaviour {
 		wasDead = false;
     	hp = MAX_HP;
         playerShield = GetComponentInChildren<Shield>();
-        weapon = Weapon.Default(this);
+        weapon = Weapon.Default();
     }
 
 	void FindSpriteRenderers ()
@@ -69,7 +69,7 @@ public class Player : MonoBehaviour {
 		}
         if ((Time.time - lastMorphTime) > 10.0f) {
             lastMorphTime = Time.time;
-            weapon = Weapon.Morph(weapon, Weapon.Random(this, 0.5f));
+            weapon = Weapon.Morph(weapon, Weapon.Random(0.5f));
         }
 		setRotation();
         checkFire();
@@ -87,7 +87,7 @@ public class Player : MonoBehaviour {
 
     private void checkFire() {
         if(Input.GetAxis(input.GetFireWeapon()) > 0.1f) {
-            weapon.Fire();
+            weapon.Fire(this);
         }
     }
 

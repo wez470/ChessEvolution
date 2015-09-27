@@ -44,6 +44,7 @@ public class BulletParticles : MonoBehaviour {
 	public void SetBulletColor (Color color){
 		this.color = color;
 	}
+
 	// Use this for initialization
 	void Start () {
 	

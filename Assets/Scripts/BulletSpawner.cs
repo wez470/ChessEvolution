@@ -5,20 +5,17 @@ public class BulletSpawner {
     private const float DEFAULT_BULLET_SIZE = 2.0f;
     private const float DEFAULT_CURVE_SPEED = 0.0f;
 
-    private Weapon weapon;
-
     private float angle;      // In degrees, clockwise from player direction.
     private float bulletSize; // Scale multiplier of the spawned bullets.
     private float curveSpeed;
 
-    public BulletSpawner(Weapon weapon) {
-        this.weapon = weapon;
+    public BulletSpawner() {
         angle = 0;
         bulletSize = DEFAULT_BULLET_SIZE;
     }
 
-    public static BulletSpawner Random(Weapon weapon) {
-        BulletSpawner bs = new BulletSpawner(weapon);
+    public static BulletSpawner Random() {
+        BulletSpawner bs = new BulletSpawner();
 
         bs.angle = RandomDistributions.RandNormal(0, 45);
         bs.bulletSize = RandomDistributions.RandNormal(DEFAULT_BULLET_SIZE, 0.4f);
@@ -31,39 +28,36 @@ public class BulletSpawner {
         return bs;
     }
     
-    public void SetOwningWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-    
-    public void Fire() {
-        GameObject bullet = MonoBehaviour.Instantiate(weapon.Owner.Bullet);
+    public void Fire(Player owner, Weapon weapon) {
+        GameObject bullet = MonoBehaviour.Instantiate(owner.Bullet);
+        
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Owner = owner;
+        bulletScript.CurveSpeed = curveSpeed;
+        // bulletScript.NumSplitBullets = 3;
+        // bulletScript.SplitsLeft = 1;
+        // bulletScript.SplitDelay = 0.50f;
+        // bulletScript.LastSplitTime = Time.time;
 
         // Ignore collisions between the bullet and the player who fired it.
-		Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), weapon.Owner.GetComponent<Collider2D>(), true);
-		Collider2D[] childColliders = weapon.Owner.GetComponentsInChildren<Collider2D>();
+        Physics2D.IgnoreCollision(bulletScript.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>(), true);
+        Collider2D[] childColliders = owner.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D childCollider in childColliders){
-        	Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), childCollider, true);
+            Physics2D.IgnoreCollision(bulletScript.GetComponent<Collider2D>(), childCollider, true);
         }
 
-        bullet.transform.position = weapon.Owner.transform.position;
+        bullet.transform.position = owner.transform.position;
         bullet.transform.localScale *= bulletSize;
 
-        float angle = (weapon.Owner.transform.eulerAngles.z + this.angle + 90.0f) * Mathf.Deg2Rad;
+        float angle = (owner.transform.eulerAngles.z + this.angle + 90.0f) * Mathf.Deg2Rad;
         Vector2 velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * weapon.Speed;
         bullet.GetComponent<Rigidbody2D>().velocity = velocity;
 
-        bullet.GetComponent<SpriteRenderer>().color = weapon.Owner.Color;
-        bullet.GetComponent<BulletParticles>().SetBulletColor(weapon.Owner.Color);
-
-        Bullet spawnedBullet = bullet.GetComponent<Bullet>();
-        spawnedBullet.CurveSpeed = curveSpeed;
-        // spawnedBullet.NumSplitBullets = 3;
-        // spawnedBullet.SplitsLeft = 1;
-        // spawnedBullet.SplitDelay = 0.50f;
-        // spawnedBullet.LastSplitTime = Time.time;
+        bullet.GetComponent<SpriteRenderer>().color = owner.Color;
+        bullet.GetComponent<BulletParticles>().SetBulletColor(owner.Color);
     }
     
-    public float GetStrength() {
+    public float GetStrength(Weapon weapon) {
         float strength =
             (weapon.Speed     - Weapon.DEFAULT_SPEED)      / Weapon.DEFAULT_SPEED      * 1.0f +
             (weapon.FireDelay - Weapon.DEFAULT_FIRE_DELAY) / Weapon.DEFAULT_FIRE_DELAY * 1.0f +
