@@ -28,15 +28,17 @@ public class Shield : MonoBehaviour {
 		}
 	}
 
-	public void enabled(bool isShieldButtonDown){
+	public bool enabled(bool isShieldButtonDown){
 		if(isShieldButtonDown && lastActivationTime + DEFAULT_ACTIVATION_DELAY < Time.time ){
 			lastActivationTime = Time.time;
 		}
 
 		if (isShieldButtonDown && canEnable()) {
 			gameObject.SetActive (true);
+			return true;
 		} else {
 			gameObject.SetActive (false);
+			return false;
 		}
 	}
 

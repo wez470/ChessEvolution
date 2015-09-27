@@ -15,6 +15,7 @@ public class Player : MonoBehaviour {
     private int hp;
     private Color color;
     private float lastMorphTime;
+	private bool shieldOn;
 
     private InputController input;
     private Weapon weapon;
@@ -37,6 +38,7 @@ public class Player : MonoBehaviour {
 	}
 
     void Start () {
+		shieldOn = false;
     	hp = MAX_HP;
         playerShield = GetComponentInChildren<Shield>();
         weapon = Weapon.Default(this);
@@ -74,7 +76,7 @@ public class Player : MonoBehaviour {
     private void checkShield() {
         float leftTrigger = Input.GetAxis(input.GetUseShield());
         bool isLeftTriggerDown = leftTrigger > 0.9f;
-        playerShield.enabled(isLeftTriggerDown);
+        shieldOn = playerShield.enabled(isLeftTriggerDown);
     }
 
     public void SetInput(InputController inputController) {
@@ -108,9 +110,7 @@ public class Player : MonoBehaviour {
     }
     
 	void OnTriggerEnter2D(Collider2D other) {
-		Debug.Log ("Collision Entered");
-		if (other.gameObject.tag == "Bullet") {
-			Debug.Log ("BULLET COLLISION");
+		if (other.gameObject.tag == "Bullet" && !shieldOn) {
 			this.hp--;
 			setPlayerColorForHP();
 			if (hp <= 0){
