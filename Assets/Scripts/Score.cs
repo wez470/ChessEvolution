@@ -11,7 +11,7 @@ public class Score : MonoBehaviour {
     }
 	
     void Update() {
-        uiText.text = "Player: " + score;
+        uiText.text = score.ToString();
     }
 
     public void SetColor(Color color) {
