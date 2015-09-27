@@ -18,7 +18,7 @@ public class BulletParticles : MonoBehaviour {
 			this.gameObject.GetComponent<SpriteRenderer>().enabled = false;
 			this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
 		}
-		else if (other.gameObject.tag == "Walls"){
+		else if (other.gameObject.tag == "Walls" || other.gameObject.tag == "Drop"){
 			shieldExplosion.transform.position = gameObject.transform.position;
 			shieldExplosion.startColor = color;
 			Instantiate ( shieldExplosion );
