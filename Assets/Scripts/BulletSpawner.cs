@@ -59,6 +59,8 @@ public class BulletSpawner {
         bulletScript.SplitsLeft = numSplits;
         bulletScript.SplitDelay = splitDelay;
         bulletScript.LastSplitTime = Time.time;
+        
+        bulletScript.IgnoreCollisions();
 
         bullet.transform.position = owner.transform.position;
         bullet.transform.localScale *= bulletSize;

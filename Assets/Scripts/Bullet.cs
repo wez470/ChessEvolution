@@ -13,7 +13,6 @@ public class Bullet : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-        IgnoreCollisions();
 	}
 	
 	// Update is called once per frame
@@ -53,6 +52,8 @@ public class Bullet : MonoBehaviour {
         bulletScript.SplitsLeft = SplitsLeft - 1;
         bulletScript.SplitDelay = SplitDelay;
         bulletScript.LastSplitTime = Time.time;
+
+        bulletScript.IgnoreCollisions();
         
         bullet.transform.position = transform.position;
         bullet.transform.localScale = transform.localScale;
