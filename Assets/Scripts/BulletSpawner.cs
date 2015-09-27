@@ -56,6 +56,9 @@ public class BulletSpawner {
 
         Bullet spawnedBullet = bullet.GetComponent<Bullet>();
         spawnedBullet.CurveSpeed = curveSpeed;
+        spawnedBullet.NumSplitBullets = 2;
+        spawnedBullet.SplitsLeft = 3;
+        spawnedBullet.SplitTime = Time.time + 0.50f;
     }
     
     public float GetStrength() {
