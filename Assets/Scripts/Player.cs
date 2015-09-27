@@ -39,6 +39,7 @@ public class Player : MonoBehaviour {
 	
 	private void setPlayerColorForHP(){
 		float fractionHP = (float)hp/(float)MAX_HP;
+		fractionHP = (fractionHP/2)+ 0.5f;
 		Color newColor = new Color(Color.r*fractionHP, Color.g*fractionHP, Color.b*fractionHP, Color.a);
 		playerSpriteRenderer.color = newColor;
 	}
