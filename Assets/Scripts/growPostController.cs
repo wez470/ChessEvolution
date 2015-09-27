@@ -36,7 +36,7 @@ public class growPostController : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D( Collision2D other ){
-		if (other.gameObject.tag == "Player1" && !imploding) {
+		if (other.gameObject.tag == "Player1" && !imploding && !growing) {
 			growing = true;
 			growStartTimer = Time.time;
 		}
