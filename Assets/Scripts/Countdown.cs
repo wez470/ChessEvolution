@@ -24,6 +24,7 @@ public class Countdown : MonoBehaviour {
 			GetComponent<Text> ().text = timeToDisplay;
 		} else {
 			Time.timeScale = 0.0f;
+
 		}
 	}
 

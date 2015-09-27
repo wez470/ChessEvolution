@@ -3,8 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     private const float ROT_DEAD_ZONE = 0.2f;
-    private const float DEFAULT_RESPAWN_TIME = 7.0f;
-    private const float WEAPON_UPGRADE_TIME = 20.0f;
+	private const float DEFAULT_RESPAWN_TIME = 3.5f;
 
     public float Speed;
     public bool ShowInputDebug = false;
@@ -39,7 +38,6 @@ public class Player : MonoBehaviour {
 	
 	private void setPlayerColorForHP(){
 		float fractionHP = (float)hp/(float)MAX_HP;
-		fractionHP = (fractionHP/2)+ 0.5f;
 		Color newColor = new Color(Color.r*fractionHP, Color.g*fractionHP, Color.b*fractionHP, Color.a);
 		playerSpriteRenderer.color = newColor;
 	}
@@ -75,7 +73,7 @@ public class Player : MonoBehaviour {
 			hp = MAX_HP;
 			setPlayerColorForHP();
 		}
-        if ((Time.time - lastMorphTime) > WEAPON_UPGRADE_TIME) {
+        if ((Time.time - lastMorphTime) > 10.0f) {
             lastMorphTime = Time.time;
             weapon = Weapon.Morph(weapon, Weapon.Random(0.5f));
         }
@@ -94,15 +92,14 @@ public class Player : MonoBehaviour {
 	}
 
     private void checkFire() {
-        if(Input.GetAxis(input.GetFireWeapon()) > 0.1f) {
+        if(Input.GetButton(input.GetFireWeapon())) {
             weapon.Fire(this);
         }
     }
 
     private void checkShield() {
-        float leftTrigger = Input.GetAxis(input.GetUseShield());
-        bool isLeftTriggerDown = leftTrigger > 0.9f;
-        shieldOn = playerShield.enabled(isLeftTriggerDown);
+		bool isLeftTriggerDown = Input.GetButton(input.GetUseShield());
+		shieldOn = playerShield.enabled(isLeftTriggerDown);
     }
 
     public void SetInput(InputController inputController) {

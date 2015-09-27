@@ -7,11 +7,11 @@ public class PlayerXboxController : InputController {
     }
     
     string InputController.GetUseShield() {
-        return "TriggersL_" + playerNum;
+        return "LB_" + playerNum;
     }
     
     string InputController.GetFireWeapon() {
-        return "TriggersR_" + playerNum;
+        return "RB_" + playerNum;
     }
     
     string InputController.GetXAxisMovement() {
