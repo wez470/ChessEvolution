@@ -102,7 +102,9 @@ public class Player : MonoBehaviour {
     }
     
 	void OnTriggerEnter2D(Collider2D other) {
+		Debug.Log ("Collision Entered");
 		if (other.gameObject.tag == "Bullet") {
+			Debug.Log ("BULLET COLLISION");
 			this.hp--;
 			setPlayerColorForHP();
 			if (hp <= 0){
