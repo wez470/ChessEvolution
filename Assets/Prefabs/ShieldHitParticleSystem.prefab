@@ -25,7 +25,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 104642}
   m_LocalRotation: {x: -.707106829, y: 0, z: 0, w: .707106829}
+<<<<<<< 656793a5182604d2455431a84184f4194f0cac4e
   m_LocalPosition: {x: 5.46062517, y: -7.334939, z: 0}
+=======
+  m_LocalPosition: {x: 6.24126005, y: 6.32721949, z: 1}
+>>>>>>> Added default player locations, JLR
   m_LocalScale: {x: .0500000007, y: .0500000007, z: .0500000007}
   m_Children: []
   m_Father: {fileID: 0}

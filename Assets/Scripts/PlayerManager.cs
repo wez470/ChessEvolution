@@ -31,6 +31,7 @@ public class PlayerManager : MonoBehaviour {
     // Assigns a controller and tag value foreach player
     private void CreatePlayer(int playerNum) {
         GameObject newPlayer = Instantiate(Player) as GameObject;
+		newPlayer.transform.position = getPlayerPosition(playerNum);
         Player player = newPlayer.gameObject.GetComponent<Player>();
        	player.SetColor ( colors[playerNum - 1] );
         SetupNewPlayerController(playerNum, newPlayer);
@@ -38,6 +39,16 @@ public class PlayerManager : MonoBehaviour {
         players.Add(newPlayer);
     }
     
+	private Vector3 getPlayerPosition(int playerNum){
+		switch (playerNum) {
+			case (1):{return new Vector3 (-12.0f, 5.0f, 1.0f);}
+			case (2):{return new Vector3 (12.0f, -5.0f, 1.0f);}
+			case (3): {return new Vector3(12.0f, 5.0f, 1.0f);}
+			case (4): {return new Vector3(-12.0f, -5.0f, 1.0f);}
+			default: {return new Vector3(0.0f, 0.0f, 1.0f);}
+		}
+	}
+
     private void SetupNewPlayerController(int playerNum, GameObject player) 
     {
         player.GetComponent<Player>().SetInput(new PlayerXboxController(playerNum));
