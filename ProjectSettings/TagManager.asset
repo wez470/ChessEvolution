@@ -9,6 +9,8 @@ TagManager:
   - Player3
   - Player4
   - Shield
+  - Walls
+  - Bullet
   layers:
   - Default
   - TransparentFX
