@@ -38,6 +38,12 @@ public class BulletSpawner {
             bs.numSplits = Mathf.RoundToInt(RandomDistributions.RandNormal(2, 0.55f));
             bs.numSplitBullets = Mathf.RoundToInt(RandomDistributions.RandNormal(2, 0.55f));
             bs.splitDelay = RandomDistributions.RandNormal(DEFAULT_SPLIT_DELAY, 0.2f);
+            
+            if (bs.numSplits < 1 || bs.numSplitBullets < 2 || bs.splitDelay <= 0.0f) {
+                bs.numSplitBullets = DEFAULT_SPLIT_BULLETS;
+                bs.numSplits = DEFAULT_SPLITS;
+                bs.splitDelay = DEFAULT_SPLIT_DELAY;
+            }
         }
 
         return bs;
@@ -66,11 +72,20 @@ public class BulletSpawner {
     }
     
     public float GetStrength(Weapon weapon) {
+        float numBullets = Mathf.Pow(numSplitBullets, numSplits);
+        if (numBullets < 1) {
+            numBullets = 1;
+        }
+
         float strength =
             (weapon.Speed     - Weapon.DEFAULT_SPEED)      / Weapon.DEFAULT_SPEED      * 1.0f +
-            (weapon.FireDelay - Weapon.DEFAULT_FIRE_DELAY) / Weapon.DEFAULT_FIRE_DELAY * 1.0f +
+            (weapon.FireDelay - Weapon.DEFAULT_FIRE_DELAY) / Weapon.DEFAULT_FIRE_DELAY * -1.0f +
             (bulletSize       - DEFAULT_BULLET_SIZE)       / DEFAULT_BULLET_SIZE       * 1.0f;
 
-        return Mathf.Max(strength, 1.0f);
+        if (numSplits > 1) {
+            strength += (splitDelay - DEFAULT_SPLIT_DELAY) / DEFAULT_SPLIT_DELAY * -1.0f;
+        }
+
+        return Mathf.Max(numBullets * strength, 1.0f);
     }
 }
