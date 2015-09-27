@@ -53,7 +53,7 @@ public class BulletSpawner {
     
     public void Fire() {
         // Don't fire if we fired within fireDelay seconds ago.
-        if (lastFiredTime + fireDelay >= Time.time) {
+        if ((Time.time - lastFiredTime) < fireDelay) {
             return;
         }
 
