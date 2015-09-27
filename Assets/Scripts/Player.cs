@@ -3,6 +3,7 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
     private const float ROT_DEAD_ZONE = 0.2f;
+	private const float DEFAULT_RESPAWN_TIME = 7.0f;
 
     public float Speed;
     public bool ShowInputDebug = false;
@@ -12,10 +13,11 @@ public class Player : MonoBehaviour {
     
 	private SpriteRenderer playerSpriteRenderer;
 	private SpriteRenderer shieldSpriteRenderer;
-	private SpriteRenderer gunSpriteRenderer;
     private int hp;
     private float lastMorphTime;
 	private bool shieldOn;
+	private float lastDeathTime;
+	private bool wasDead;
 
     private InputController input;
     private Weapon weapon;
@@ -25,20 +27,19 @@ public class Player : MonoBehaviour {
 		FindSpriteRenderers ();
 		Color = col;
 		playerSpriteRenderer.color = col;
-		gunSpriteRenderer.color = col;
 		shieldSpriteRenderer.color = new Color(Color.r, Color.g, Color.b, 0.35f);
 	}
 	
 	private void setPlayerColorForHP(){
 		float fractionHP = (float)hp/(float)MAX_HP;
-		fractionHP = (fractionHP/2f) + 0.5f;
 		Color newColor = new Color(Color.r*fractionHP, Color.g*fractionHP, Color.b*fractionHP, Color.a);
 		playerSpriteRenderer.color = newColor;
-		gunSpriteRenderer.color = newColor;
 	}
 
     void Start () {
 		shieldOn = false;
+		lastDeathTime = Time.time - DEFAULT_RESPAWN_TIME;
+		wasDead = false;
     	hp = MAX_HP;
         playerShield = GetComponentInChildren<Shield>();
         weapon = Weapon.Default(this);
@@ -51,21 +52,38 @@ public class Player : MonoBehaviour {
 			if (sr.transform.gameObject.tag.Equals ("Shield")) {
 				shieldSpriteRenderer = sr;
 			}
-			else {
-				gunSpriteRenderer = sr;
-			}
 		}
 	}
     
     void Update () {
+		if (isDead ()) {
+			playerShield.enabled(false);
+			return;
+		} else if (wasDead) {
+			// Respawn
+			wasDead = false;
+			GetComponent<BoxCollider2D>().enabled = true;
+			GetComponent<SpriteRenderer>().enabled = true;
+			hp = MAX_HP;
+			setPlayerColorForHP();
+		}
         if ((Time.time - lastMorphTime) > 10.0f) {
             lastMorphTime = Time.time;
             weapon = Weapon.Morph(weapon, Weapon.Random(this, 0.5f));
         }
-
+		setRotation();
         checkFire();
         checkShield();
+		setMovement();
     }
+
+	public bool isDead(){
+		if (lastDeathTime + DEFAULT_RESPAWN_TIME >= Time.time) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     private void checkFire() {
         if(Input.GetAxis(input.GetFireWeapon()) > 0.1f) {
@@ -81,11 +99,6 @@ public class Player : MonoBehaviour {
 
     public void SetInput(InputController inputController) {
         input = inputController;
-    }
-
-    void FixedUpdate() {
-        setMovement();
-        setRotation();
     }
 
     void OnGUI() {
@@ -121,8 +134,10 @@ public class Player : MonoBehaviour {
 	}
 	
 	private void KillAndRespawn(){
-		Destroy ( this.gameObject );
-		//TODO: RESPAWN
+		lastDeathTime = Time.time;
+		wasDead = true;
+		GetComponent<BoxCollider2D>().enabled = false;
+		GetComponent<SpriteRenderer>().enabled = false;
 	}
 
     private void setMovement() {
