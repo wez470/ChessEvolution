@@ -42,4 +42,10 @@ public class Shield : MonoBehaviour {
 
 		gameObject.SetActive (isEnabled);
 	}
+
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "Bullet") {
+			Destroy(other.gameObject);
+		}
+	}
 }
