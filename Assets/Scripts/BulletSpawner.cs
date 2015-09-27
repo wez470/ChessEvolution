@@ -3,14 +3,13 @@ using System;
 
 public class BulletSpawner {
     private const float DEFAULT_BULLET_SIZE = 2.0f;
+    private const float DEFAULT_CURVE_SPEED = 0.0f;
 
     private Weapon weapon;
 
-    // In degrees, clockwise from player direction.
-    private float angle;
-
-    // Scale multiplier of the spawned bullets.
-    private float bulletSize;
+    private float angle;      // In degrees, clockwise from player direction.
+    private float bulletSize; // Scale multiplier of the spawned bullets.
+    private float curveSpeed;
 
     public BulletSpawner(Weapon weapon) {
         this.weapon = weapon;
@@ -23,6 +22,11 @@ public class BulletSpawner {
 
         bs.angle = RandomDistributions.RandNormal(0, 45);
         bs.bulletSize = RandomDistributions.RandNormal(DEFAULT_BULLET_SIZE, 0.4f);
+
+        bs.curveSpeed = RandomDistributions.RandNormal(DEFAULT_CURVE_SPEED, 10.0f);
+        if (Mathf.Abs(bs.curveSpeed) < 15.0f) {
+            bs.curveSpeed = 0;
+        }
 
         return bs;
     }
@@ -47,6 +51,9 @@ public class BulletSpawner {
         float angle = (weapon.Owner.transform.eulerAngles.z + this.angle + 90.0f) * Mathf.Deg2Rad;
         Vector2 velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * weapon.Speed;
         bullet.GetComponent<Rigidbody2D>().velocity = velocity;
+
+        Bullet spawnedBullet = bullet.GetComponent<Bullet>();
+        spawnedBullet.CurveSpeed = curveSpeed;
     }
     
     public float GetStrength() {
