@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 public class BulletSpawner {
-    private const float DEFAULT_FIRE_DELAY = 0.5f;
+    private const float DEFAULT_FIRE_DELAY = 0.75f;
     private const float DEFAULT_SPEED = 8;
     private const float DEFAULT_BULLET_SIZE = 1;
 
