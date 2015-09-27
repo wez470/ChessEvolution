@@ -49,14 +49,14 @@ public class Weapon {
         float strength = 0;
         
         foreach (BulletSpawner bs in mine.bulletSpawners) {
-            if (UnityEngine.Random.value > CHANCE_TO_KEEP_WEAPON) {
+            if (UnityEngine.Random.value < CHANCE_TO_KEEP_WEAPON) {
                 strength += bs.GetStrength();
                 combined.bulletSpawners.Add(bs);
             }
         }
         
         foreach (BulletSpawner bs in other.bulletSpawners) {
-            if (UnityEngine.Random.value > CHANCE_TO_GAIN_WEAPON) {
+            if (UnityEngine.Random.value < CHANCE_TO_GAIN_WEAPON) {
                 strength += bs.GetStrength();
                 combined.bulletSpawners.Add(bs);
             }
