@@ -1,11 +1,33 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 public class Weapon {
     private Player owner;
     private List<BulletSpawner> bulletSpawners;
 
     public Weapon(Player owner) {
-        bulletSpawners = new List<BulletSpawner>{new BulletSpawner(owner)};
+        this.owner = owner;
+    }
+    
+    public static Weapon Default(Player owner, float targetStrength) {
+        Weapon w = new Weapon(owner);
+        w.bulletSpawners = new List<BulletSpawner>{new BulletSpawner(owner)};
+        return w;
+    }
+
+    public static Weapon Random(Player owner, float targetStrength) {
+        Weapon w = new Weapon(owner);
+
+        float strength = 0;
+        w.bulletSpawners = new List<BulletSpawner>();
+
+        while (strength < targetStrength) {
+            BulletSpawner bulletSpawner = BulletSpawner.Random(owner);
+            strength += bulletSpawner.GetStrength();
+            w.bulletSpawners.Add(bulletSpawner);
+        }
+
+        return w;
     }
 
     public void Fire() {
@@ -19,6 +41,6 @@ public class Weapon {
     }
 
     public float GetStrength() {
-        return 0.0f;
+        return bulletSpawners.Select(bs => bs.GetStrength()).Sum();
     }
 }

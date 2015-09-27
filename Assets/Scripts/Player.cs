@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
     void Start () {
         playerShield = GetComponentInChildren<Shield>();
-        weapon = new Weapon(this);
+        weapon = Weapon.Random(this, 10.0f);
     }
     
     void Update () {
