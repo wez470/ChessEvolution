@@ -12,6 +12,20 @@ public class Player : MonoBehaviour {
     private Weapon weapon;
     private Shield playerShield;
 
+	public void SetColor(Color color){
+		SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
+		sr.color = color;
+		SpriteRenderer[] childSrs = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
+		foreach (SpriteRenderer srs in childSrs){
+			if (srs.transform.gameObject.tag.Equals("Shield")){
+				srs.color = new Color(color.r, color.g, color.b, 0.35f);
+			}
+			else {
+				srs.color = color;
+			}
+		}
+	}
+
     void Start () {
         playerShield = GetComponentInChildren<Shield>();
         weapon = Weapon.Random(this, 10.0f);
@@ -80,4 +94,6 @@ public class Player : MonoBehaviour {
             GetComponent<Rigidbody2D>().angularVelocity = 0;
         }
     }
+    
+    
 }

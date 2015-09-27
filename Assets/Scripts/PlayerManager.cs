@@ -7,6 +7,9 @@ public class PlayerManager : MonoBehaviour {
 
     private int numPlayers = 0;
     private List<GameObject> players = new List<GameObject>();
+
+    private Color[] colors = {Color.green, Color.blue, Color.magenta, Color.red};
+    
     
     void Awake () {
         foreach(String joystick in Input.GetJoystickNames()) {
@@ -28,7 +31,8 @@ public class PlayerManager : MonoBehaviour {
     // Assigns a controller and tag value foreach player
     private void CreatePlayer(int playerNum) {
         GameObject newPlayer = Instantiate(Player) as GameObject;
-        newPlayer.transform.position = new Vector3(0, 0, 0);
+        Player player = newPlayer.gameObject.GetComponent<Player>();
+       	player.SetColor ( colors[playerNum - 1] );
         SetupNewPlayerController(playerNum, newPlayer);
         newPlayer.tag = "Player" + playerNum;
         players.Add(newPlayer);
