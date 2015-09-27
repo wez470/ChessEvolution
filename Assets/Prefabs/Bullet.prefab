@@ -73,7 +73,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldExplosion: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361, type: 2}
-  shipExplosion: {fileID: 19878422, guid: 0705aa9c418fd2640a19a1923d8fc243, type: 2}
+  shipExplosion: {fileID: 19831306, guid: e35970ac4571a5548be520371c27d18c, type: 2}
   wallExplosion: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361, type: 2}
   COLLIDER_RADIUS: 1
 --- !u!114 &11499346
@@ -87,8 +87,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cc930d47705944ca368f80ce80017a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Owner: {fileID: 0}
   CurveSpeed: 0
-  SplitTime: 0
+  LastSplitTime: 0
+  SplitDelay: 0
   SplitsLeft: 0
   NumSplitBullets: 0
 --- !u!212 &21201520
@@ -140,7 +142,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: shipExplosion
       value: 
-      objectReference: {fileID: 19878422, guid: 0705aa9c418fd2640a19a1923d8fc243,
+      objectReference: {fileID: 19831306, guid: e35970ac4571a5548be520371c27d18c,
         type: 2}
     - target: {fileID: 0}
       propertyPath: wallExplosion

@@ -29,6 +29,7 @@ public class BulletParticles : MonoBehaviour {
 		         || other.gameObject.tag == "Player3"
 		         || other.gameObject.tag == "Player4"){
 			shipExplosion.transform.position = gameObject.transform.position;
+			shipExplosion.startColor = other.gameObject.GetComponent<Player>().Color;
 			Instantiate (shipExplosion);
 			Destroy (this.gameObject);
 		}

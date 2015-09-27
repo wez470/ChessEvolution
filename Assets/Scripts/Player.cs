@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public GameObject Bullet;
     public int MAX_HP;
     public Color Color;
+    public ParticleSystem deathExplosion;
     
 	private SpriteRenderer playerSpriteRenderer;
 	private SpriteRenderer shieldSpriteRenderer;
@@ -137,6 +138,14 @@ public class Player : MonoBehaviour {
 		wasDead = true;
 		GetComponent<BoxCollider2D>().enabled = false;
 		GetComponent<SpriteRenderer>().enabled = false;
+		deathExplosion.startColor = Color;
+		deathExplosion.transform.position = transform.position;
+		ParticleSystem[] subSystems = deathExplosion.GetComponentsInChildren<ParticleSystem>();
+		foreach (ParticleSystem system in subSystems){
+			Debug.Log(system.name);
+			system.startColor = Color;
+		}
+		Instantiate ( deathExplosion );
 	}
 
     private void setMovement() {
