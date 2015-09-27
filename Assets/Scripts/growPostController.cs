@@ -43,12 +43,15 @@ public class growPostController : MonoBehaviour {
 		if (transform.localScale.x < 0.0f) {
 			Destroy(gameObject);
 		}
-	}
+    }
 
 	void OnCollisionEnter2D( Collision2D other ){
-		if (other.gameObject.tag.Contains("Player") && !imploding && !growing) {
-			growing = true;
-			growStartTimer = Time.time;
-		}
+        if (other.gameObject.tag.Contains("Walls")) {
+            growing = false;
+            imploding = true;
+        } else if (other.gameObject.tag.Contains("Player") && !imploding && !growing) {
+            growing = true;
+            growStartTimer = Time.time;
+        }
 	}
 }
