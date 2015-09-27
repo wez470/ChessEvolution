@@ -11,6 +11,7 @@ TagManager:
   - Shield
   - Walls
   - Bullet
+  - Gun
   layers:
   - Default
   - TransparentFX

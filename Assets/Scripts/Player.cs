@@ -7,29 +7,52 @@ public class Player : MonoBehaviour {
     public float Speed;
     public bool ShowInputDebug = false;
     public GameObject Bullet;
+    public int MAX_HP;
+    
+	private SpriteRenderer playerSpriteRenderer;
+	private SpriteRenderer shieldSpriteRenderer;
+	private SpriteRenderer gunSpriteRenderer;
+    private int hp;
+    private Color color;
 
     private InputController input;
     private Weapon weapon;
     private Shield playerShield;
 
-	public void SetColor(Color color){
-		SpriteRenderer sr = this.gameObject.GetComponent<SpriteRenderer>();
-		sr.color = color;
-		SpriteRenderer[] childSrs = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
-		foreach (SpriteRenderer srs in childSrs){
-			if (srs.transform.gameObject.tag.Equals("Shield")){
-				srs.color = new Color(color.r, color.g, color.b, 0.35f);
-			}
-			else {
-				srs.color = color;
-			}
-		}
+	public void SetColor(Color col){
+		FindSpriteRenderers ();
+		color = col;
+		playerSpriteRenderer.color = col;
+		gunSpriteRenderer.color = col;
+		shieldSpriteRenderer.color = new Color(color.r, color.g, color.b, 0.35f);;
+	}
+	
+	private void setPlayerColorForHP(){
+		float fractionHP = (float)hp/(float)MAX_HP;
+		fractionHP = (fractionHP/2f) + 0.5f;
+		Color newColor = new Color(color.r*fractionHP, color.g*fractionHP, color.b*fractionHP, color.a);
+		playerSpriteRenderer.color = newColor;
+		gunSpriteRenderer.color = newColor;
 	}
 
     void Start () {
+    	hp = MAX_HP;
         playerShield = GetComponentInChildren<Shield>();
         weapon = Weapon.Random(this, 5.0f);
     }
+
+	void FindSpriteRenderers ()
+	{
+		playerSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer> ();
+		foreach (SpriteRenderer sr in this.gameObject.GetComponentsInChildren<SpriteRenderer> ()) {
+			if (sr.transform.gameObject.tag.Equals ("Shield")) {
+				shieldSpriteRenderer = sr;
+			}
+			else {
+				gunSpriteRenderer = sr;
+			}
+		}
+	}
     
     void Update () {
         checkFire();
@@ -77,6 +100,22 @@ public class Player : MonoBehaviour {
                       Input.GetAxis(input.GetUseShield())));
         }
     }
+    
+	void OnTriggerEnter2D(Collider2D other) {
+		if (other.gameObject.tag == "Bullet") {
+			this.hp--;
+			setPlayerColorForHP();
+			if (hp <= 0){
+				KillAndRespawn();
+			}
+			Destroy(other.gameObject);
+		}
+	}
+	
+	private void KillAndRespawn(){
+		Destroy ( this.gameObject );
+		//TODO: RESPAWN
+	}
 
     private void setMovement() {
         float speedX = Input.GetAxis(input.GetXAxisMovement()) * Speed;
@@ -94,6 +133,5 @@ public class Player : MonoBehaviour {
             GetComponent<Rigidbody2D>().angularVelocity = 0;
         }
     }
-    
     
 }
