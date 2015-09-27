@@ -45,7 +45,7 @@ public class Player : MonoBehaviour {
     private void checkShield() {
         float leftTrigger = Input.GetAxis(input.GetUseShield());
         bool isLeftTriggerDown = leftTrigger > 0.9f;
-        playerShield.gameObject.SetActive(isLeftTriggerDown);
+        playerShield.enabled(isLeftTriggerDown);
     }
 
     public void SetInput(InputController inputController) {
