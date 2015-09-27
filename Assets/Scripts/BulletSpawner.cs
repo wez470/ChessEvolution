@@ -4,7 +4,7 @@ using System;
 public class BulletSpawner {
     private const float DEFAULT_FIRE_DELAY = 0.75f;
     private const float DEFAULT_SPEED = 8;
-    private const float DEFAULT_BULLET_SIZE = 1;
+    private const float DEFAULT_BULLET_SIZE = 1.5f;
 
     private Player owner;
 
@@ -43,7 +43,7 @@ public class BulletSpawner {
     public static BulletSpawner Random(Player owner) {
         BulletSpawner bs = new BulletSpawner(owner);
 
-        bs.angle = randNormal(0, 65);
+        bs.angle = randNormal(0, 60);
         bs.speed = randNormal(DEFAULT_SPEED, 1);
         bs.bulletSize = randNormal(DEFAULT_BULLET_SIZE, 0.2f);
         bs.fireDelay = randNormal(DEFAULT_FIRE_DELAY, 0.05f);

@@ -4,7 +4,7 @@ using System.Linq;
 
 public class Weapon {
     private const float MORPH_STRENGTH_INCREASE = 1.0f;
-    private const float CHANCE_TO_KEEP_WEAPON = 0.80f; // chance that you own bullet spawner is included in new weapon
+    private const float CHANCE_TO_KEEP_WEAPON = 0.90f; // chance that you own bullet spawner is included in new weapon
     private const float CHANCE_TO_GAIN_WEAPON = 0.50f; // chance that other's bullet spawner is included in new weapon
 
     private Player owner;

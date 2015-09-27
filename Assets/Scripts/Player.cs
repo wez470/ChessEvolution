@@ -38,7 +38,7 @@ public class Player : MonoBehaviour {
     void Start () {
     	hp = MAX_HP;
         playerShield = GetComponentInChildren<Shield>();
-        weapon = Weapon.Random(this, 5.0f);
+        weapon = Weapon.Default(this);
     }
 
 	void FindSpriteRenderers ()
