@@ -120,6 +120,7 @@ MonoBehaviour:
   Bullet: {fileID: 130136, guid: c2923832231d48947a1a370f674cf09f, type: 2}
   MAX_HP: 10
   Color: {r: 0, g: 0, b: 0, a: 0}
+  deathExplosion: {fileID: 19876816, guid: aed2e03f048478649b8a66eb6de5f007, type: 2}
 --- !u!114 &11466202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -239,6 +240,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: deathExplosion
+      value: 
+      objectReference: {fileID: 19876816, guid: aed2e03f048478649b8a66eb6de5f007,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 138510}
