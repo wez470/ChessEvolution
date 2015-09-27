@@ -15,7 +15,7 @@ public class Weapon {
         this.bulletSpawners = new List<BulletSpawner>();
     }
     
-    public static Weapon Default(Player owner, float targetStrength) {
+    public static Weapon Default(Player owner) {
         Weapon w = new Weapon(owner);
         w.bulletSpawners = new List<BulletSpawner>{new BulletSpawner(owner)};
         return w;
