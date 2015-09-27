@@ -12,6 +12,7 @@ TagManager:
   - Walls
   - Bullet
   - Gun
+  - Drop
   layers:
   - Default
   - TransparentFX
