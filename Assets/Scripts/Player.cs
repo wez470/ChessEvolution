@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	private SpriteRenderer gunSpriteRenderer;
     private int hp;
     private Color color;
+    private float lastMorphTime;
 
     private InputController input;
     private Weapon weapon;
@@ -55,6 +56,11 @@ public class Player : MonoBehaviour {
 	}
     
     void Update () {
+        if ((Time.time - lastMorphTime) > 10.0f) {
+            lastMorphTime = Time.time;
+            weapon = Weapon.Morph(weapon, Weapon.Random(this, 0.5f));
+        }
+
         checkFire();
         checkShield();
     }
