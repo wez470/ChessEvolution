@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using UnityEngine;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Weapon {
@@ -36,8 +37,33 @@ public class Weapon {
         }
     }
     
-    public void Morph(Weapon w) {
-    
+    public static Weapon Morph(Weapon mine, Weapon other) {
+        Weapon combined = new Weapon(mine.owner);
+
+        float targetStrength = Mathf.Max(mine.GetStrength(), other.GetStrength()) + 1.0f;
+        float strength = 0;
+        
+        foreach (BulletSpawner bs in mine.bulletSpawners) {
+            if (UnityEngine.Random.value > 0.80) {
+                strength += bs.GetStrength();
+                combined.bulletSpawners.Add(bs);
+            }
+        }
+        
+        foreach (BulletSpawner bs in other.bulletSpawners) {
+            if (UnityEngine.Random.value > 0.50) {
+                strength += bs.GetStrength();
+                combined.bulletSpawners.Add(bs);
+            }
+        }
+
+        while (strength < targetStrength) {
+            BulletSpawner bulletSpawner = BulletSpawner.Random(mine.owner);
+            strength += bulletSpawner.GetStrength();
+            combined.bulletSpawners.Add(bulletSpawner);
+        }
+
+        return combined;
     }
 
     public float GetStrength() {
