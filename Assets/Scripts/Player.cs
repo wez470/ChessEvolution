@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
 		Color = col;
 		playerSpriteRenderer.color = col;
 		shieldSpriteRenderer.color = new Color(Color.r, Color.g, Color.b, 0.35f);
+		DeathExplosion.startColor = col;
 	}
 
     public void SetPlayerNum(int playerNum) {
@@ -148,7 +149,13 @@ public class Player : MonoBehaviour {
 		GetComponent<SpriteRenderer>().enabled = false;
 		DeathExplosion.startColor = Color;
 		DeathExplosion.transform.position = transform.position;
-		ParticleSystem[] subSystems = DeathExplosion.GetComponentsInChildren<ParticleSystem>();
+		ParticleSystem[] subSystems = DeathExplosion.gameObject.GetComponentsInChildren<ParticleSystem>();
+		DeathExplosion.transform.FindChild("ShipDeath (1)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
+		DeathExplosion.transform.FindChild("ShipDeath (2)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
+		DeathExplosion.transform.FindChild("ShipDeath (3)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
+		DeathExplosion.transform.FindChild("ShipDeath (4)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
+		Debug.Log (subSystems.Length.ToString());
+		Debug.Log (DeathExplosion.gameObject.name);
 		foreach (ParticleSystem system in subSystems){
 			Debug.Log(system.name);
 			system.startColor = Color;

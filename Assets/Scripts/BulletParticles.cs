@@ -38,7 +38,7 @@ public class BulletParticles : MonoBehaviour {
 	void createAndDestroyShieldExplosion(Vector3 otherPosition){
 		shieldExplosion.transform.position = Vector3.MoveTowards(otherPosition, this.transform.position, COLLIDER_RADIUS);
 		shieldExplosion.startColor = color;
-		shieldExplosion = Instantiate ( shieldExplosion );
+		Instantiate ( shieldExplosion );
 		Destroy ( this.gameObject );
 	}
 	
