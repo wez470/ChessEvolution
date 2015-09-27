@@ -8,7 +8,7 @@ public class PlayerManager : MonoBehaviour {
     private int numPlayers = 0;
     private List<GameObject> players = new List<GameObject>();
 
-    private Color[] colors = {Color.green, Color.blue, Color.magenta, Color.red};
+    private Color[] colors = {Color.green, Color.cyan, Color.magenta, Color.red};
     
     
     void Awake () {
