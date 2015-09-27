@@ -34,17 +34,10 @@ public class BulletSpawner {
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.Owner = owner;
         bulletScript.CurveSpeed = curveSpeed;
-        // bulletScript.NumSplitBullets = 3;
-        // bulletScript.SplitsLeft = 1;
-        // bulletScript.SplitDelay = 0.50f;
-        // bulletScript.LastSplitTime = Time.time;
-
-        // Ignore collisions between the bullet and the player who fired it.
-        Physics2D.IgnoreCollision(bulletScript.GetComponent<Collider2D>(), owner.GetComponent<Collider2D>(), true);
-        Collider2D[] childColliders = owner.GetComponentsInChildren<Collider2D>();
-        foreach (Collider2D childCollider in childColliders){
-            Physics2D.IgnoreCollision(bulletScript.GetComponent<Collider2D>(), childCollider, true);
-        }
+        bulletScript.NumSplitBullets = 2;
+        bulletScript.SplitsLeft = 1;
+        bulletScript.SplitDelay = 0.50f;
+        bulletScript.LastSplitTime = Time.time;
 
         bullet.transform.position = owner.transform.position;
         bullet.transform.localScale *= bulletSize;

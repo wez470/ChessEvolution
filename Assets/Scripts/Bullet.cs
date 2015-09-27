@@ -12,13 +12,12 @@ public class Bullet : MonoBehaviour {
     public int NumSplitBullets; // The number of bullets this will split into.
 
 	// Use this for initialization
-	void Start () {
-
+	void Start() {
+        IgnoreCollisions();
 	}
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void Update() {
 	}
 
     void FixedUpdate() {
@@ -34,21 +33,48 @@ public class Bullet : MonoBehaviour {
             float stepAngle = SPLIT_CONE_ANGLE / (NumSplitBullets - 1);
 
             for (int i = 0; i < NumSplitBullets; i++) {
-                GameObject bulletObject = Instantiate(gameObject);
-                Bullet b = bulletObject.GetComponent<Bullet>();
-                b.SplitsLeft = SplitsLeft - 1;
-                b.LastSplitTime = Time.time;
-
-                Rigidbody2D otherRb = bulletObject.GetComponent<Rigidbody2D>();
-                float bulletAngle = Mathf.Atan2(v.y, v.x);
-                float newAngle = bulletAngle + angle * Mathf.Deg2Rad;
-                otherRb.velocity = new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle)) * rb.velocity.magnitude;
-
+                MakeSplitClone(angle);
                 angle += stepAngle;
             }
             
             // Destroy the current bullet.
             Destroy(gameObject);
+        }
+    }
+
+    // Angle in degrees.
+    public void MakeSplitClone(float angle) {
+        GameObject bullet = MonoBehaviour.Instantiate(Owner.Bullet);
+
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.Owner = Owner;
+        bulletScript.CurveSpeed = CurveSpeed;
+        bulletScript.NumSplitBullets = NumSplitBullets;
+        bulletScript.SplitsLeft = SplitsLeft - 1;
+        bulletScript.SplitDelay = SplitDelay;
+        bulletScript.LastSplitTime = Time.time;
+        
+        bullet.transform.position = transform.position;
+        bullet.transform.localScale = transform.localScale;
+        
+        bullet.GetComponent<SpriteRenderer>().color = Owner.Color;
+        bullet.GetComponent<BulletParticles>().SetBulletColor(Owner.Color);
+
+        Vector2 oldVelocity = GetComponent<Rigidbody2D>().velocity;
+        float oldAngle = Mathf.Atan2(oldVelocity.y, oldVelocity.x);
+
+        float newAngle = oldAngle + angle * Mathf.Deg2Rad;
+        Vector2 newVelocity = new Vector2(Mathf.Cos(newAngle), Mathf.Sin(newAngle));
+
+        bullet.GetComponent<Rigidbody2D>().velocity = newVelocity  * oldVelocity.magnitude;
+    }
+    
+    public void IgnoreCollisions() {
+        // Ignore collisions between the bullet and the player who fired it.
+        Physics2D.IgnoreCollision(GetComponent<Collider2D>(), Owner.GetComponent<Collider2D>(), true);
+        Collider2D[] childColliders = Owner.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D childCollider in childColliders){
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), childCollider, true);
         }
     }
 }
