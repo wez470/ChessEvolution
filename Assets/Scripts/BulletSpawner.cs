@@ -53,13 +53,14 @@ public class BulletSpawner {
         bullet.GetComponent<Rigidbody2D>().velocity = velocity;
 
         bullet.GetComponent<SpriteRenderer>().color = weapon.Owner.Color;
+        bullet.GetComponent<BulletParticles>().SetBulletColor(weapon.Owner.Color);
 
         Bullet spawnedBullet = bullet.GetComponent<Bullet>();
-        bullet.GetComponent<BulletParticles>().SetBulletColor( weapon.Owner.Color );
         spawnedBullet.CurveSpeed = curveSpeed;
-//        spawnedBullet.NumSplitBullets = 2;
-//        spawnedBullet.SplitsLeft = 3;
-//        spawnedBullet.SplitTime = Time.time + 0.50f;
+        // spawnedBullet.NumSplitBullets = 3;
+        // spawnedBullet.SplitsLeft = 1;
+        // spawnedBullet.SplitDelay = 0.50f;
+        // spawnedBullet.LastSplitTime = Time.time;
     }
     
     public float GetStrength() {
