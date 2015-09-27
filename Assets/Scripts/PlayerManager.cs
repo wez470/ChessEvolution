@@ -32,7 +32,7 @@ public class PlayerManager : MonoBehaviour {
     private void CreatePlayer(int playerNum) {
         GameObject newPlayer = Instantiate(Player) as GameObject;
         Player player = newPlayer.gameObject.GetComponent<Player>();
-       	player.SetColor ( colors[playerNum] );
+       	player.SetColor ( colors[playerNum - 1] );
         SetupNewPlayerController(playerNum, newPlayer);
         newPlayer.tag = "Player" + playerNum;
         players.Add(newPlayer);
