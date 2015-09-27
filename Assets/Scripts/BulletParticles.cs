@@ -12,8 +12,6 @@ public class BulletParticles : MonoBehaviour {
 	public float COLLIDER_RADIUS = 0.09f;
 	
 	void OnTriggerEnter2D( Collider2D other ){
-		Debug.Log (" Triggered ");
-		Debug.Log ( other.gameObject.tag );
 		if (other.gameObject.tag == "Shield" ){
 			
 			createAndDestroyShieldExplosion(other.transform.position);
@@ -30,7 +28,6 @@ public class BulletParticles : MonoBehaviour {
 		         || other.gameObject.tag == "Player2"
 		         || other.gameObject.tag == "Player3"
 		         || other.gameObject.tag == "Player4"){
-			Debug.Log ("Got player tag from trigger");
 			shipExplosion.transform.position = gameObject.transform.position;
 			Instantiate (shipExplosion);
 			Destroy (this.gameObject);
