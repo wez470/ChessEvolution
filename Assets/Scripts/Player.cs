@@ -149,17 +149,10 @@ public class Player : MonoBehaviour {
 		GetComponent<SpriteRenderer>().enabled = false;
 		DeathExplosion.startColor = Color;
 		DeathExplosion.transform.position = transform.position;
-		ParticleSystem[] subSystems = DeathExplosion.gameObject.GetComponentsInChildren<ParticleSystem>();
 		DeathExplosion.transform.FindChild("ShipDeath (1)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
 		DeathExplosion.transform.FindChild("ShipDeath (2)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
 		DeathExplosion.transform.FindChild("ShipDeath (3)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
 		DeathExplosion.transform.FindChild("ShipDeath (4)").gameObject.GetComponent<ParticleSystem>().startColor = Color;
-		Debug.Log (subSystems.Length.ToString());
-		Debug.Log (DeathExplosion.gameObject.name);
-		foreach (ParticleSystem system in subSystems){
-			Debug.Log(system.name);
-			system.startColor = Color;
-		}
 		Instantiate ( DeathExplosion );
 	}
 
