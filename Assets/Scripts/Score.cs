@@ -15,6 +15,7 @@ public class Score : MonoBehaviour {
     }
 
     public void SetColor(Color color) {
+        uiText = GetComponent<Text>();
         uiText.color = color;
     }
 
@@ -22,4 +23,3 @@ public class Score : MonoBehaviour {
         score++;
     }
 }
-

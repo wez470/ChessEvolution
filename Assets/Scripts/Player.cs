@@ -10,8 +10,9 @@ public class Player : MonoBehaviour {
     public GameObject Bullet;
     public int MAX_HP;
     public Color Color;
-    public ParticleSystem deathExplosion;
-    
+    public ParticleSystem DeathExplosion;
+    public int PlayerNum;
+
 	private SpriteRenderer playerSpriteRenderer;
 	private SpriteRenderer shieldSpriteRenderer;
     private int hp;
@@ -19,7 +20,6 @@ public class Player : MonoBehaviour {
 	private bool shieldOn;
 	private float lastDeathTime;
 	private bool wasDead;
-
     private InputController input;
     private Weapon weapon;
     private Shield playerShield;
@@ -30,6 +30,10 @@ public class Player : MonoBehaviour {
 		playerSpriteRenderer.color = col;
 		shieldSpriteRenderer.color = new Color(Color.r, Color.g, Color.b, 0.35f);
 	}
+
+    public void SetPlayerNum(int playerNum) {
+        PlayerNum = playerNum;    
+    }
 	
 	private void setPlayerColorForHP(){
 		float fractionHP = (float)hp/(float)MAX_HP;
@@ -37,7 +41,7 @@ public class Player : MonoBehaviour {
 		playerSpriteRenderer.color = newColor;
 	}
 
-    void Start () {
+    void Start() {
 		shieldOn = false;
 		lastDeathTime = Time.time - DEFAULT_RESPAWN_TIME;
 		wasDead = false;
@@ -128,6 +132,10 @@ public class Player : MonoBehaviour {
 			this.hp--;
 			setPlayerColorForHP();
 			if (hp <= 0){
+                int shooter = other.gameObject.GetComponent<Bullet>().Owner.PlayerNum;
+                ScoreController scoreController = GameObject.FindGameObjectWithTag(
+                    "ScoreController").GetComponent<ScoreController>();
+                scoreController.IncreaseScore(shooter);
 				KillAndRespawn();
 			}
 		}
@@ -138,14 +146,14 @@ public class Player : MonoBehaviour {
 		wasDead = true;
 		GetComponent<BoxCollider2D>().enabled = false;
 		GetComponent<SpriteRenderer>().enabled = false;
-		deathExplosion.startColor = Color;
-		deathExplosion.transform.position = transform.position;
-		ParticleSystem[] subSystems = deathExplosion.GetComponentsInChildren<ParticleSystem>();
+		DeathExplosion.startColor = Color;
+		DeathExplosion.transform.position = transform.position;
+		ParticleSystem[] subSystems = DeathExplosion.GetComponentsInChildren<ParticleSystem>();
 		foreach (ParticleSystem system in subSystems){
 			Debug.Log(system.name);
 			system.startColor = Color;
 		}
-		Instantiate ( deathExplosion );
+		Instantiate ( DeathExplosion );
 	}
 
     private void setMovement() {

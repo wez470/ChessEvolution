@@ -4,14 +4,13 @@ using System.Collections.Generic;
 
 public class PlayerManager : MonoBehaviour {
     public GameObject Player;
+    public ScoreController scoreController;
 
     private int numPlayers = 0;
     private List<GameObject> players = new List<GameObject>();
-
     private Color[] colors = {Color.green, Color.cyan, Color.magenta, Color.red};
     
-    
-    void Awake () {
+    void Awake() {
         foreach(String joystick in Input.GetJoystickNames()) {
             // make sure device is a controller
             if(joystick.Contains("Controller")) {
@@ -33,7 +32,9 @@ public class PlayerManager : MonoBehaviour {
         GameObject newPlayer = Instantiate(Player) as GameObject;
 		newPlayer.transform.position = getPlayerPosition(playerNum);
         Player player = newPlayer.gameObject.GetComponent<Player>();
-       	player.SetColor ( colors[playerNum - 1] );
+        scoreController.SetColor(playerNum, colors[playerNum - 1]);
+       	player.SetColor(colors[playerNum - 1]);
+        player.SetPlayerNum(playerNum);
         SetupNewPlayerController(playerNum, newPlayer);
         newPlayer.tag = "Player" + playerNum;
         players.Add(newPlayer);
