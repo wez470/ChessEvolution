@@ -52,6 +52,8 @@ public class BulletSpawner {
         Vector2 velocity = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * weapon.Speed;
         bullet.GetComponent<Rigidbody2D>().velocity = velocity;
 
+        bullet.GetComponent<SpriteRenderer>().color = weapon.Owner.Color;
+
         Bullet spawnedBullet = bullet.GetComponent<Bullet>();
         spawnedBullet.CurveSpeed = curveSpeed;
     }

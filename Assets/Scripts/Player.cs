@@ -8,12 +8,12 @@ public class Player : MonoBehaviour {
     public bool ShowInputDebug = false;
     public GameObject Bullet;
     public int MAX_HP;
+    public Color Color;
     
 	private SpriteRenderer playerSpriteRenderer;
 	private SpriteRenderer shieldSpriteRenderer;
 	private SpriteRenderer gunSpriteRenderer;
     private int hp;
-    private Color color;
     private float lastMorphTime;
 	private bool shieldOn;
 
@@ -23,16 +23,16 @@ public class Player : MonoBehaviour {
 
 	public void SetColor(Color col){
 		FindSpriteRenderers ();
-		color = col;
+		Color = col;
 		playerSpriteRenderer.color = col;
 		gunSpriteRenderer.color = col;
-		shieldSpriteRenderer.color = new Color(color.r, color.g, color.b, 0.35f);;
+		shieldSpriteRenderer.color = new Color(Color.r, Color.g, Color.b, 0.35f);
 	}
 	
 	private void setPlayerColorForHP(){
 		float fractionHP = (float)hp/(float)MAX_HP;
 		fractionHP = (fractionHP/2f) + 0.5f;
-		Color newColor = new Color(color.r*fractionHP, color.g*fractionHP, color.b*fractionHP, color.a);
+		Color newColor = new Color(Color.r*fractionHP, Color.g*fractionHP, Color.b*fractionHP, Color.a);
 		playerSpriteRenderer.color = newColor;
 		gunSpriteRenderer.color = newColor;
 	}
