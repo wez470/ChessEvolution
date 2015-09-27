@@ -2,33 +2,43 @@
 using System.Collections;
 
 public class growPostController : MonoBehaviour {
+    private const float DEFAULT_GROW_TIME = 8.0f;
+    private const float DEFAULT_GROW_SPEED = 0.0075f;
 
 	private bool growing;
 	private bool imploding;
 	private float growStartTimer;
-	private const float GROW_TIME = 10.0f;
+    private float growTime;
+    private float growSpeed;
 
-	private Vector3 growthVector = new Vector3(0.005f, 0.005f, 1);
-	private Vector3 implodeVector = new Vector3(0.1f, 0.1f, 1);
 	// Use this for initialization
 	void Start () {
 		growStartTimer = Time.time;
 		growing = false;
 		imploding = false;
+        growTime = RandomDistributions.RandNormal(DEFAULT_GROW_TIME, 2.0f);
+        growSpeed = Mathf.Max(
+            RandomDistributions.RandNormal(DEFAULT_GROW_SPEED, 0.003f),
+            DEFAULT_GROW_SPEED);
+
+        if (Random.value > 0.90) {
+            growSpeed *= 3;
+            growTime /= 2;
+        }
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (growing) {
-			if(growStartTimer + GROW_TIME > Time.time){
-				transform.localScale += growthVector;
+			if(growStartTimer + growTime > Time.time){
+                transform.localScale += new Vector3(growSpeed, growSpeed, 1);
 			}
 			else{
 				imploding = true;
 				growing = false;
 			}
 		} else if (imploding) {
-			transform.localScale -= implodeVector;
+            transform.localScale -= new Vector3(growSpeed * 20, growSpeed * 20, 1);
 		}
 		if (transform.localScale.x < 0.0f) {
 			Destroy(gameObject);
