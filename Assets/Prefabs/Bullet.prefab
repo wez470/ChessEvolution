@@ -12,6 +12,7 @@ GameObject:
   - 58: {fileID: 5887872}
   - 114: {fileID: 11499346}
   - 50: {fileID: 5035722}
+  - 114: {fileID: 11482866}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Bullet
@@ -60,6 +61,21 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: .100000001
+--- !u!114 &11482866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 130136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff5cc3fa53db174fa4c94a84e023778, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldExplosion: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361, type: 2}
+  shipExplosion: {fileID: 19878422, guid: 0705aa9c418fd2640a19a1923d8fc243, type: 2}
+  wallExplosion: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361, type: 2}
+  COLLIDER_RADIUS: 1
 --- !u!114 &11499346
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -71,6 +87,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cc930d47705944ca368f80ce80017a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CurveSpeed: 0
+  SplitTime: 0
+  SplitsLeft: 0
+  NumSplitBullets: 0
 --- !u!212 &21201520
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -111,6 +131,25 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_TagString
       value: Bullet
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: shieldExplosion
+      value: 
+      objectReference: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: shipExplosion
+      value: 
+      objectReference: {fileID: 19878422, guid: 0705aa9c418fd2640a19a1923d8fc243,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: wallExplosion
+      value: 
+      objectReference: {fileID: 19816176, guid: 5e55c221f3f80f043992095d33e42361,
+        type: 2}
+    - target: {fileID: 0}
+      propertyPath: COLLIDER_RADIUS
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

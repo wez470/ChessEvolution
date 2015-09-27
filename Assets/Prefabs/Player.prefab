@@ -14,7 +14,7 @@ GameObject:
   - 61: {fileID: 6170012}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -225,7 +225,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_TagString
-      value: Gun
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: MAX_HP

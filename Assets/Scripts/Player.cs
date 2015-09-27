@@ -129,7 +129,6 @@ public class Player : MonoBehaviour {
 			if (hp <= 0){
 				KillAndRespawn();
 			}
-			Destroy(other.gameObject);
 		}
 	}
 	

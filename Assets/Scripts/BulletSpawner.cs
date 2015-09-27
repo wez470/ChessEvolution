@@ -39,7 +39,7 @@ public class BulletSpawner {
         GameObject bullet = MonoBehaviour.Instantiate(weapon.Owner.Bullet);
 
         // Ignore collisions between the bullet and the player who fired it.
-			Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), weapon.Owner.GetComponent<Collider2D>(), true);
+		Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), weapon.Owner.GetComponent<Collider2D>(), true);
 		Collider2D[] childColliders = weapon.Owner.GetComponentsInChildren<Collider2D>();
         foreach (Collider2D childCollider in childColliders){
         	Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), childCollider, true);
@@ -55,6 +55,7 @@ public class BulletSpawner {
         bullet.GetComponent<SpriteRenderer>().color = weapon.Owner.Color;
 
         Bullet spawnedBullet = bullet.GetComponent<Bullet>();
+        bullet.GetComponent<BulletParticles>().SetBulletColor( weapon.Owner.Color );
         spawnedBullet.CurveSpeed = curveSpeed;
         spawnedBullet.NumSplitBullets = 2;
         spawnedBullet.SplitsLeft = 3;

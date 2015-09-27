@@ -9,9 +9,10 @@ public class Bullet : MonoBehaviour {
     public int SplitsLeft;      // Number of times this bullet will split into more bullets.
     public int NumSplitBullets; // The number of bullets this will split into.
 
+
 	// Use this for initialization
 	void Start () {
-	
+
 	}
 	
 	// Update is called once per frame
