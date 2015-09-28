@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class ScoreController : MonoBehaviour {
     public PlayerManager playerManager;
@@ -29,5 +30,20 @@ public class ScoreController : MonoBehaviour {
 
     public void IncreaseScore(int playerNum) {
         scores[playerNum - 1].IncreaseScore();
+    }
+
+    public void DisplayWinner() {
+        int maxScore = scores[0].PlayerScore;
+        int maxIndex = 0;
+        for (int i = 0; i < scores.Count; i++) {
+            if (scores[i].PlayerScore > maxScore) {
+                maxScore = scores[i].PlayerScore;
+                maxIndex = i;
+            }
+        }
+
+        WinningScore winningScore = GetComponentInChildren<WinningScore>();
+        winningScore.SetColor(scores[maxIndex].Color);
+        winningScore.SetScore(maxScore);
     }
 }
