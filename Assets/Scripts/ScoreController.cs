@@ -8,6 +8,7 @@ public class ScoreController : MonoBehaviour {
 
     private List<Score> scores = new List<Score>();
     private bool initialized = false;
+    private bool gameOver = false;
 
     void Awake() {
         if (!initialized) {
@@ -29,10 +30,13 @@ public class ScoreController : MonoBehaviour {
     }
 
     public void IncreaseScore(int playerNum) {
-        scores[playerNum - 1].IncreaseScore();
+        if (!gameOver) {
+            scores[playerNum - 1].IncreaseScore();
+        }
     }
 
     public void DisplayWinner() {
+        gameOver = true;
         int maxScore = scores[0].PlayerScore;
         int maxIndex = 0;
         for (int i = 0; i < scores.Count; i++) {
