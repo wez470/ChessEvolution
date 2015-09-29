@@ -8,8 +8,10 @@ public class Countdown : MonoBehaviour {
     public ScoreController scoreController;
 	
     private int timeLeft;
+    private bool restart;
 
     void Start() {
+        restart = true;
         timeLeft = countdownStart;
     }
 
@@ -26,8 +28,11 @@ public class Countdown : MonoBehaviour {
     		GetComponent<Text>().text = timeToDisplay;
         }
         else {
-            scoreController.DisplayWinner();
-            Invoke("ReloadLevel", 10f);
+            if (restart) {
+                scoreController.DisplayWinner();
+                Invoke("ReloadLevel", 10f);
+                restart = false;
+            }
         }
 
         if(timeLeft == 5) {
