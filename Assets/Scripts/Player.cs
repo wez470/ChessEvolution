@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using XboxCtrlrInput;
 using System.Collections;
 
 public class Player : MonoBehaviour {
@@ -93,13 +94,13 @@ public class Player : MonoBehaviour {
 	}
 
     private void checkFire() {
-        if(Input.GetButton(input.GetFireWeapon())) {
+        if(XCI.GetAxis(XboxAxis.RightTrigger, PlayerNum) > 0.1f) {
             weapon.Fire(this);
         }
     }
 
     private void checkShield() {
-		bool isLeftTriggerDown = Input.GetButton(input.GetUseShield());
+        bool isLeftTriggerDown = XCI.GetAxis(XboxAxis.LeftTrigger, PlayerNum) > 0.1f;
 		shieldOn = playerShield.enabled(isLeftTriggerDown);
     }
 
@@ -157,14 +158,14 @@ public class Player : MonoBehaviour {
 	}
 
     private void setMovement() {
-        float speedX = Input.GetAxis(input.GetXAxisMovement()) * Speed;
-        float speedY = -Input.GetAxis(input.GetYAxisMovement()) * Speed;
+        float speedX = XCI.GetAxis(XboxAxis.LeftStickX, PlayerNum) * Speed;
+        float speedY = XCI.GetAxis(XboxAxis.LeftStickY, PlayerNum) * Speed;
         GetComponent<Rigidbody2D>().AddForce(new Vector2(speedX, speedY));
     }
     
     private void setRotation() {
-        float rotX = Input.GetAxis(input.GetXAxisRotation());
-        float rotY = Input.GetAxis(input.GetYAxisRotation());
+            float rotX = XCI.GetAxis(XboxAxis.RightStickX, PlayerNum);
+            float rotY = -XCI.GetAxis(XboxAxis.RightStickY, PlayerNum);
         float angle = Mathf.Atan2(-rotY, rotX) * Mathf.Rad2Deg - 90f;
 
         if(Mathf.Abs(rotX) > ROT_DEAD_ZONE || Mathf.Abs(rotY) > ROT_DEAD_ZONE) {
